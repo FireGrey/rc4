@@ -36,16 +36,17 @@ int main(int argc, char *argv[])
 	
 	uint8_t K[messagelength];
 
-	for(int i=0, j=0; messagelength > 0; messagelength--)
+	for(int i=0, j=0, count=0; count < messagelength; count++)
 	{
 		i = (i + 1) % 256;
 		j = (j + S[i]) % 256;
-		int temp = S[i];
+		uint8_t temp = S[i];
 		S[i] = S[j];
 		S[j] = temp;
-		K[i] = S[S[i] + S[j] % 256];
+        K[count] = S[(S[i] + S[j]) % 256];
 		// printf("[#%d: ", messagelength);
 		// printf("%u]", K[i]);
-		// printf("%x", K[i]^message[i]);
+		//printf("%x xor %x = %x", K[count], message[count], K[count]^message[count]);
+        printf("%c", K[count]^message[count]);
 	}
 }
